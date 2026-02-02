@@ -1,11 +1,15 @@
 # Heart Disease Competition - Exploration Notes
 
-## Current Baseline
+## Current Best
 - **Model**: XGBoost with default parameters + predict_proba
+- **Features**: 13 original + 3 interactions (max_hr/thallium, sex×chest_pain_type, chest_pain_type×slope_of_st)
+- **LB Score**: 0.95289
+- **Top Score**: 0.95391 (gap: 0.00102)
+
+## Original Baseline
+- **Features**: 13 original only
 - **CV ROC AUC**: 0.95786
 - **LB Score**: 0.95274
-- **LB Position**: 254
-- **Top Score**: 0.95391 (gap: 0.00117)
 
 ## Strategy
 - **First half of month**: Feature engineering with single model (XGBoost)
@@ -58,12 +62,33 @@
 
 **Note:** Domain knowledge not helpful with synthetic data - staying purely data-driven
 
+**TODO - Revisit later:**
+- Thallium dropped from #1 (63%) to #14 after adding max_hr/thallium interaction
+- Bottom features (thallium, bp, fbs_over_120) may be candidates for removal or rescue via interactions
+- Test if removing redundant raw features helps reduce noise
+
 ---
 
 ## Experiment Log
 
-### Experiment 1: [TODO]
-- Description:
-- Result:
-- Learnings:
+### Experiment 1: Pairwise Interaction Features (multiply + divide)
+- **Description**: Added ALL pairwise interaction features using multiplication and division
+- **Result**:
+  - CV ROC AUC: 0.95786 → 0.95943 (+0.00157)
+  - LB: 0.95274 → 0.95228 (-0.00046) **OVERFIT**
+- **Features**: 326 total (13 original + 313 interactions)
+- **Learning**: Too many features. Model found noise in training that didn't generalize. Need to be selective.
+
+### Experiment 2: Top 3 Interaction Features Only
+- **Description**: Kept only top 3 pairwise features from Experiment 1
+- **Features**: 13 original + 3 interactions (max_hr/thallium, chest_pain_type×slope_of_st, sex×chest_pain_type)
+- **Result**: LB 0.95274 → 0.95289 (+0.00015) **IMPROVEMENT**
+- **Learning**: Fewer, targeted features > many noisy features
+
+### Experiment 3: [TODO] - Suggested Next Steps
+**Options to try:**
+1. Add 4th interaction feature - `chest_pain_type × thallium` was #4 in original importance ranking
+2. Try different interaction types - subtract, or binned combinations
+3. Greedy search - keep adding interactions one at a time until LB degrades
+4. Ablation study - test each of the 3 current interactions individually to confirm all are helping
 
