@@ -94,10 +94,19 @@
 - **Learning**: Default n_estimators (100) was already close to optimal. Early stopping is essential for preventing overfitting. High CV score doesn't mean good generalization.
 - **Method**: Used train/val split with early_stopping_rounds=50, then applied best_iteration to final model
 
-### Experiment 4: [TODO] - Suggested Next Steps
+### Experiment 4: 4th Interaction Feature
+- **Description**: Added `chest_pain_type × thallium` as 4th interaction feature
+- **Result**: LB 0.95291 → 0.95285 (-0.00006) **NO IMPROVEMENT**
+- **Learning**: 3 interactions is the sweet spot; adding more hurts
+
+### Experiment 5: Remove Low-Importance Features
+- **Description**: Removed bottom 3 features (fbs_over_120, bp, thallium)
+- **Result**: LB worse **NO IMPROVEMENT**
+- **Learning**: Even low-importance features contribute; keep all original features
+
+### Experiment 6: [TODO] - Suggested Next Steps
 **Options to try:**
-1. Add 4th interaction feature - `chest_pain_type × thallium` was #4 in original importance ranking
-2. Try different interaction types - subtract, or binned combinations
-3. Greedy search - keep adding interactions one at a time until LB degrades
-4. Ablation study - test each of the 3 current interactions individually to confirm all are helping
+1. Try different interaction types - subtract, or binned combinations
+2. Greedy search - keep adding interactions one at a time until LB degrades
+3. Ablation study - test each of the 3 current interactions individually to confirm all are helping
 
