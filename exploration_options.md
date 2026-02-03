@@ -1,10 +1,11 @@
 # Heart Disease Competition - Exploration Notes
 
 ## Current Best
-- **Model**: XGBoost with default parameters + predict_proba
+- **Model**: XGBoost with n_estimators=67 (via early stopping) + predict_proba
 - **Features**: 13 original + 3 interactions (max_hr/thallium, sex×chest_pain_type, chest_pain_type×slope_of_st)
-- **LB Score**: 0.95289
-- **Top Score**: 0.95391 (gap: 0.00102)
+- **CV Score**: 0.95722
+- **LB Score**: 0.95291
+- **Top Score**: 0.95391 (gap: 0.00100)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -85,7 +86,15 @@
 - **Result**: LB 0.95274 → 0.95289 (+0.00015) **IMPROVEMENT**
 - **Learning**: Fewer, targeted features > many noisy features
 
-### Experiment 3: [TODO] - Suggested Next Steps
+### Experiment 3: n_estimators Tuning with Early Stopping
+- **Description**: Tested increasing n_estimators to 2000, then used early stopping to find optimal value
+- **Results**:
+  - n_estimators=2000: CV 0.97715, LB 0.94660 **SEVERE OVERFIT**
+  - n_estimators=67 (via early_stopping_rounds=50): CV 0.95722, LB 0.95291 **NEW BEST**
+- **Learning**: Default n_estimators (100) was already close to optimal. Early stopping is essential for preventing overfitting. High CV score doesn't mean good generalization.
+- **Method**: Used train/val split with early_stopping_rounds=50, then applied best_iteration to final model
+
+### Experiment 4: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Add 4th interaction feature - `chest_pain_type × thallium` was #4 in original importance ranking
 2. Try different interaction types - subtract, or binned combinations
