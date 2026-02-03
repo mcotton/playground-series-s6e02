@@ -56,7 +56,7 @@
 - [ ] Pairwise interactions among top 5 features
 
 **C) Rescue low-importance features:**
-- [ ] Age binning (decades, quartiles)
+- [x] Age binning (decades, quartiles) - **didn't help**
 - [ ] Log/sqrt transforms on continuous features (bp, cholesterol, max_hr)
 - [ ] Interactions with low-importance features (age × bp, age × cholesterol)
 - [ ] Polynomial features for continuous vars
@@ -104,9 +104,14 @@
 - **Result**: LB worse **NO IMPROVEMENT**
 - **Learning**: Even low-importance features contribute; keep all original features
 
-### Experiment 6: [TODO] - Suggested Next Steps
+### Experiment 6: Binned Features
+- **Description**: Added 4 binned features for continuous variables
+- **Result**: All 4 features landed at bottom of feature importance **NO IMPROVEMENT**
+- **Learning**: Binning doesn't help; XGBoost already handles continuous features well via splits
+
+### Experiment 7: [TODO] - Suggested Next Steps
 **Options to try:**
-1. Try different interaction types - subtract, or binned combinations
-2. Greedy search - keep adding interactions one at a time until LB degrades
-3. Ablation study - test each of the 3 current interactions individually to confirm all are helping
+1. Try different models (LightGBM, CatBoost) - may find different patterns
+2. Ensemble current best XGBoost with another model
+3. Ablation study - test each of the 3 current interactions individually
 
