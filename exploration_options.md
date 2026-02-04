@@ -118,9 +118,14 @@
 - **Result**: Hurt both CV and LB **WORSE**
 - **Learning**: Interactions between weak features just add noise
 
-### Experiment 9: [TODO] - Suggested Next Steps
+### Experiment 9: Stacking (LR prediction as feature)
+- **Description**: Added LogisticRegression prediction as feature to XGBoost
+- **Result**: CV 0.95691, LB 0.95289 **WORSE**
+- **Learning**: LR prediction became #1 feature, XGBoost over-relied on it. Stacking works better as weighted average, not as input feature.
+
+### Experiment 10: [TODO] - Suggested Next Steps
 **Options to try:**
-1. Try different models (LightGBM, CatBoost) - may find different patterns
-2. Ensemble current best XGBoost with another model
+1. Try different models (LightGBM, CatBoost) standalone
+2. Simple weighted average ensemble (not stacking)
 3. Ablation study - test each of the 3 current interactions individually
 
