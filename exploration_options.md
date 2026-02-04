@@ -1,11 +1,10 @@
 # Heart Disease Competition - Exploration Notes
 
 ## Current Best
-- **Model**: XGBoost with n_estimators=67 (via early stopping) + predict_proba
+- **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 13 original + 3 interactions (max_hr/thallium, sex×chest_pain_type, chest_pain_type×slope_of_st)
-- **CV Score**: 0.95722
-- **LB Score**: 0.95291
-- **Top Score**: 0.95391 (gap: 0.00100)
+- **LB Score**: 0.95291 (0.95292 with polynomial features - likely noise)
+- **Top Score**: 0.95391 (gap: ~0.00100)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -57,9 +56,9 @@
 
 **C) Rescue low-importance features:**
 - [x] Age binning (decades, quartiles) - **didn't help**
-- [ ] Log/sqrt transforms on continuous features (bp, cholesterol, max_hr)
-- [ ] Interactions with low-importance features (age × bp, age × cholesterol)
-- [ ] Polynomial features for continuous vars
+- [x] Log/sqrt transforms on continuous features - **didn't help**
+- [x] Interactions with low-importance features (age × bp, age × cholesterol) - **made it worse**
+- [x] Polynomial features for continuous vars - **likely noise**
 
 **Note:** Domain knowledge not helpful with synthetic data - staying purely data-driven
 
@@ -109,7 +108,17 @@
 - **Result**: All 4 features landed at bottom of feature importance **NO IMPROVEMENT**
 - **Learning**: Binning doesn't help; XGBoost already handles continuous features well via splits
 
-### Experiment 7: [TODO] - Suggested Next Steps
+### Experiment 7: Polynomial Features (square/sqrt)
+- **Description**: Added sq and sqrt transforms for bp, max_hr, cholesterol (6 features)
+- **Result**: LB 0.95291 → 0.95292 (+0.00001) - likely noise
+- **Learning**: Gain too small to be confident it's real signal vs LB variance
+
+### Experiment 8: Low-Importance Feature Interactions
+- **Description**: Added age×bp, age×cholesterol, bp×cholesterol
+- **Result**: Hurt both CV and LB **WORSE**
+- **Learning**: Interactions between weak features just add noise
+
+### Experiment 9: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) - may find different patterns
 2. Ensemble current best XGBoost with another model
