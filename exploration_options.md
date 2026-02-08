@@ -2,8 +2,8 @@
 
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
-- **Features**: 13 original + 3 interactions (max_hr/thallium, sex×chest_pain_type, chest_pain_type×slope_of_st)
-- **LB Score**: 0.95291 (0.95292 with polynomial features - likely noise)
+- **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
+- **LB Score**: 0.95291
 - **Top Score**: 0.95391 (gap: ~0.00100)
 
 ## Original Baseline
@@ -133,7 +133,17 @@
 - **Result**: LB 0.95288 - better than 10a but still below best (0.95291)
 - **Learning**: Integer interactions + leaking ordinal info into categoricals hurts. Clean categorical is better than mixed, but integers + interactions still wins overall.
 
-### Experiment 11: [TODO] - Suggested Next Steps
+### Experiment 11: st_depression Interaction Features
+- **Description**: Tried additional features using st_depression
+- **Result**: Couldn't beat LB 0.95288 **NO IMPROVEMENT**
+- **Learning**: st_depression interactions don't add value beyond existing features
+
+### Experiment 12: Remove Polynomial Features
+- **Description**: Removed polynomial features, kept st_depression interactions
+- **Result**: LB 0.95291 - same as best **CONFIRMED NOISE**
+- **Learning**: Polynomial features added nothing; 22 features (13 original + 3 original interactions + 6 st_depression interactions) is the current set
+
+### Experiment 13: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Simple weighted average ensemble (not stacking)
