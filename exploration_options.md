@@ -35,11 +35,7 @@
 - [ ] Logistic Regression
 
 ### 2. Hyperparameter Tuning
-- [ ] learning_rate
-- [ ] max_depth
-- [ ] n_estimators
-- [ ] subsample
-- [ ] colsample_bytree
+- [x] RandomizedSearchCV over learning_rate, max_depth, n_estimators, subsample, colsample_bytree, min_child_weight, gamma, reg_alpha, reg_lambda - **defaults are better**
 
 ### 3. Ensembling
 - [ ] Simple average of multiple models
@@ -143,7 +139,13 @@
 - **Result**: LB 0.95291 - same as best **CONFIRMED NOISE**
 - **Learning**: Polynomial features added nothing; 22 features (13 original + 3 original interactions + 6 st_depression interactions) is the current set
 
-### Experiment 13: [TODO] - Suggested Next Steps
+### Experiment 13: RandomizedSearchCV Hyperparameter Tuning
+- **Description**: Iterative random search over XGBoost hyperparameters, narrowing ranges across multiple rounds
+- **Best found**: n_estimators=1000, max_depth=2, learning_rate=0.3, colsample_bytree=0.8, reg_lambda=2.0, subsample=0.9, min_child_weight=2, gamma=0.01, reg_alpha=0.01
+- **Result**: CV 0.95543, LB 0.94992 **WORSE than defaults (CV 0.95645, LB 0.95291)**
+- **Learning**: XGBoost defaults are already near-optimal for this dataset. The search converged on shallow trees (depth 2) with heavy regularization, but this didn't generalize. Hyperparameter tuning is not the path to improvement here.
+
+### Experiment 14: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Simple weighted average ensemble (not stacking)
