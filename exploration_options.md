@@ -123,7 +123,17 @@
 - **Result**: CV 0.95691, LB 0.95289 **WORSE**
 - **Learning**: LR prediction became #1 feature, XGBoost over-relied on it. Stacking works better as weighted average, not as input feature.
 
-### Experiment 10: [TODO] - Suggested Next Steps
+### Experiment 10: Categorical Encoding for thallium & chest_pain_type
+- **Description**: Treated thallium and chest_pain_type as categorical dtype with enable_categorical=True
+- **Result**: LB 0.95291 → 0.95276 (-0.00015) **WORSE**
+- **Note**: Interaction features (max_hr/thallium, sex×chest_pain_type) were still computed from integers, creating a conflict
+
+### Experiment 10b: Categorical Encoding WITHOUT interaction features
+- **Description**: Removed interaction features that leaked ordinal info, kept categorical encoding
+- **Result**: LB 0.95288 - better than 10a but still below best (0.95291)
+- **Learning**: Integer interactions + leaking ordinal info into categoricals hurts. Clean categorical is better than mixed, but integers + interactions still wins overall.
+
+### Experiment 11: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Simple weighted average ensemble (not stacking)
