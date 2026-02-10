@@ -3,8 +3,8 @@
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
-- **LB Score**: 0.95291
-- **Top Score**: 0.95391 (gap: ~0.00100)
+- **LB Score**: 0.95296
+- **Top Score**: 0.95391 (gap: ~0.00095)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -145,7 +145,12 @@
 - **Result**: CV 0.95543, LB 0.94992 **WORSE than defaults (CV 0.95645, LB 0.95291)**
 - **Learning**: XGBoost defaults are already near-optimal for this dataset. The search converged on shallow trees (depth 2) with heavy regularization, but this didn't generalize. Hyperparameter tuning is not the path to improvement here.
 
-### Experiment 14: [TODO] - Suggested Next Steps
+### Experiment 14: One-Hot Encoding thallium & chest_pain_type
+- **Description**: One-hot encoded thallium and chest_pain_type instead of keeping as integers
+- **Result**: LB 0.95291 → 0.95296 (+0.00005) **NEW BEST**
+- **Learning**: One-hot gives XGBoost explicit binary splits per category value, better than ordinal integers or native categorical encoding
+
+### Experiment 15: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Simple weighted average ensemble (not stacking)
