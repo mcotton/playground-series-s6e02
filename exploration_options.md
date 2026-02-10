@@ -3,8 +3,8 @@
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
-- **LB Score**: 0.95296
-- **Top Score**: 0.95391 (gap: ~0.00095)
+- **LB Score**: 0.95302
+- **Top Score**: 0.95391 (gap: ~0.00089)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -150,7 +150,21 @@
 - **Result**: LB 0.95291 → 0.95296 (+0.00005) **NEW BEST**
 - **Learning**: One-hot gives XGBoost explicit binary splits per category value, better than ordinal integers or native categorical encoding
 
-### Experiment 15: [TODO] - Suggested Next Steps
+### Experiment 15: One-Hot All Low-Cardinality Features
+- **Description**: One-hot encoded ekg_results, slope_of_st, number_of_vessels_fluro in addition to thallium & chest_pain_type
+- **Result**: CV 0.95675, LB 0.95281 **WORSE**
+- **Learning**: slope_of_st has ordinal meaning, one-hot hurts
+
+### Experiment 15b: One-Hot Without slope_of_st
+- **Description**: One-hot thallium, chest_pain_type, ekg_results, number_of_vessels_fluro
+- **Result**: CV 0.95691, LB 0.95284 **STILL WORSE**
+
+### Experiment 15c: One-Hot + Keep Original Integer Columns
+- **Description**: One-hot thallium & chest_pain_type but also keep the original integer columns alongside the dummies
+- **Result**: CV 0.95674, LB 0.95302 (+0.00006) **NEW BEST**
+- **Learning**: Having both representations (one-hot + integer) gives XGBoost more flexibility. CV dropped but LB improved - CV is not always reliable.
+
+### Experiment 16: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Simple weighted average ensemble (not stacking)
