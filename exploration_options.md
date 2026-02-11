@@ -4,7 +4,8 @@
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
 - **LB Score**: 0.95307
-- **Top Score**: 0.95391 (gap: ~0.00084)
+- **LB Position**: 1189 / 2031
+- **Top Score**: 0.95401 (gap: ~0.00094)
 
 ## Original Baseline
 - **Features**: 13 original only
