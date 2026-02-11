@@ -3,8 +3,8 @@
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
-- **LB Score**: 0.95302
-- **Top Score**: 0.95391 (gap: ~0.00089)
+- **LB Score**: 0.95307
+- **Top Score**: 0.95391 (gap: ~0.00084)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -163,6 +163,14 @@
 - **Description**: One-hot thallium & chest_pain_type but also keep the original integer columns alongside the dummies
 - **Result**: CV 0.95674, LB 0.95302 (+0.00006) **NEW BEST**
 - **Learning**: Having both representations (one-hot + integer) gives XGBoost more flexibility. CV dropped but LB improved - CV is not always reliable.
+
+### Experiment 15d: One-Hot + Integer for ekg_results & number_of_vessels_fluro
+- **Description**: Added one-hot + integer for ekg_results and number_of_vessels_fluro alongside thallium & chest_pain_type
+- **Result**: LB 0.95295 **WORSE**
+
+### Experiment 15e: Reverted to thallium + chest_pain_type only (one-hot + integer)
+- **Result**: LB 0.95307 **NEW BEST**
+- **Learning**: Non-determinism in train/val split or early stopping may explain jump. Or fixing the orig_df bug improved the result.
 
 ### Experiment 16: [TODO] - Suggested Next Steps
 **Options to try:**
