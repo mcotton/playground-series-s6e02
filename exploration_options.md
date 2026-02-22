@@ -3,9 +3,9 @@
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
-- **LB Score**: 0.95307
+- **LB Score**: 0.95314
 - **LB Position**: 1189 / 2031
-- **Top Score**: 0.95401 (gap: ~0.00094)
+- **Top Score**: 0.95401 (gap: ~0.00087)
 
 ## Original Baseline
 - **Features**: 13 original only
@@ -173,9 +173,15 @@
 - **Result**: LB 0.95307 **NEW BEST**
 - **Learning**: Non-determinism in train/val split or early stopping may explain jump. Or fixing the orig_df bug improved the result.
 
-### Experiment 16: [TODO] - Suggested Next Steps
+### Experiment 16: K-Fold Averaging + Remove Polynomial Features
+- **Description**: 5-fold StratifiedKFold averaging for predictions, removed 6 polynomial features (bp_sq/rt, max_hr_sq/rt, cholesterol_sq/rt)
+- **Result**: LB 0.95307 → 0.95314 (+0.00007) **NEW BEST**
+- **Learning**: K-fold averaging reduces variance and is a free lunch. Removing noise features helped too.
+
+### Experiment 17: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
-2. Simple weighted average ensemble (not stacking)
-3. Ablation study - test each of the 3 current interactions individually
+2. Weighted average ensemble across model types
+3. Ablation study - test st_depression interaction features
+4. Increase to 10 folds
 

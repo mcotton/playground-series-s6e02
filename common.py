@@ -115,20 +115,6 @@ def make_new_features(df):
     target = get_target()
     features = get_features(df)
     
-    for f1 in features:
-        for f2 in features:
-            # print(f"{f1}_x_{f2}")
-            if f1 != f2:
-                try:
-                    # df[f"{f1}_x_{f2}"] = df[f1] * df[f2]
-                    # df[f"{f1}_%_{f2}"] = df[f1] % df[f2]
-                    # print(f"{f1}_/_{f2}")
-                    # df[f"{f1}_/_{f2}"] = df[f1] / df[f2]
-                    # df[f"{f1}_square"] = df[f1] **2
-                    # df[f"{f1}_cube"] = df[f1] **3
-                    pass
-                except:
-                    pass   
 
     # # These featues hurt CV and LB, XGBoost didn't like them
     # df['study_x_attendance'] = df['study_hours'] * df['class_attendance']
