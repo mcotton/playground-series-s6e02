@@ -3,7 +3,7 @@
 ## Current Best
 - **Model**: XGBoost with early stopping + predict_proba
 - **Features**: 22 features (13 original + 3 top interactions + 6 st_depression interactions)
-- **LB Score**: 0.95314
+- **LB Score**: 0.95317
 - **LB Position**: 1189 / 2031
 - **Top Score**: 0.95401 (gap: ~0.00087)
 
@@ -15,6 +15,7 @@
 ## Strategy
 - **First half of month**: Feature engineering with single model (XGBoost)
 - **Second half**: Ensembles / meta-models / blending
+- **Principle**: Prioritize robustness over public LB score. Public LB is only 20% of test data - private LB (80%) often causes major shakeups. K-fold averaging and ensemble diversity reduce variance across any test subset, protecting against private LB drops. A stable model that scores slightly lower on public LB is worth more than an overfit model that scores higher.
 
 ## Key Observations So Far
 1. Using `predict_proba` instead of `predict` was a huge jump (0.88 -> 0.95)
@@ -178,7 +179,11 @@
 - **Result**: LB 0.95307 → 0.95314 (+0.00007) **NEW BEST**
 - **Learning**: K-fold averaging reduces variance and is a free lunch. Removing noise features helped too.
 
-### Experiment 17: [TODO] - Suggested Next Steps
+### Experiment 17: Increase to 10-Fold Averaging
+- **Result**: LB 0.95314 → 0.95317 (+0.00003) **NEW BEST**
+- **Learning**: Diminishing returns as expected, but still a free gain
+
+### Experiment 18: [TODO] - Suggested Next Steps
 **Options to try:**
 1. Try different models (LightGBM, CatBoost) standalone
 2. Weighted average ensemble across model types
